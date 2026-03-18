@@ -15,7 +15,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BTC UAP Fleet — Live Cycle Indicators</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Silkscreen:wght@400;700&display=swap">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Silkscreen:wght@400;700&display=swap');
 *{margin:0;padding:0;box-sizing:border-box}
@@ -53,18 +53,14 @@ body{background:#111;display:flex;justify-content:center;align-items:stretch;hei
 <div id="grid-layer" style="position:absolute;inset:0;pointer-events:none;z-index:3"></div>
 <div id="birds-layer" style="position:absolute;inset:0;z-index:10"></div>
 <div id="loading"><span class="dot">.</span><span class="dot" style="animation-delay:.2s">.</span><span class="dot" style="animation-delay:.4s">.</span><br>Fetching BTC data</div>
-<div id="top-controls" style="position:absolute;top:14px;left:14px;z-index:20;display:flex;gap:6px">
-<button class="top-btn nav-btn" style="position:static" onclick="showAbout()">About</button>
-<button class="top-btn nav-btn tip-btn" style="position:static" onclick="showTip()">&#9889; Tip</button>
+<div style="position:absolute;top:14px;left:14px;display:flex;align-items:center;gap:10px;z-index:20">
+<button class="top-btn" style="position:static" onclick="showAbout()">About</button>
+<button class="top-btn tip-btn" style="position:static" onclick="showTip()">&#9889; Tip</button>
 </div>
-<div id="top-controls-right" style="position:absolute;top:14px;right:14px;z-index:20;display:flex;gap:6px">
-<button class="top-btn nav-btn" style="position:static" onclick="showShareModal()">Share</button>
-<button class="top-btn nav-btn" id="sound-btn" style="position:static" onclick="toggleSound()">Sound: off</button>
+<div style="position:absolute;top:14px;right:14px;display:flex;align-items:center;gap:10px;z-index:20">
+<button class="top-btn" style="position:static" onclick="showShareModal()">Share</button>
+<button class="top-btn" id="sound-btn" style="position:static" onclick="toggleSound()">Sound: off</button>
 </div>
-<div id="high-label" style="position:absolute;left:14px;font:11px 'Inter',sans-serif;color:rgba(255,255,255,.55);z-index:20;letter-spacing:.6px">HIGH = SELL ZONE</div>
-<style>
-.nav-btn{min-width:60px;text-align:center}
-</style>
 <div id="about-modal" style="display:none;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:40;background:rgba(0,0,0,.75);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:24px 28px;text-align:center;font-family:'Inter',sans-serif;max-width:380px">
 <div style="font-size:14px;font-weight:500;color:#fff;margin-bottom:10px">BTC UAP</div>
 <div style="font-size:11px;color:rgba(255,255,255,.55);line-height:1.6;margin-bottom:14px">Fetches live BTC price data, calculates 7 cycle indicators client-side, and represents each one as a different craft type flying at an altitude matching its signal strength.<br><br>The sky changes with your local time, data refreshes every 5 minutes. Enjoy watching the fleet!</div>
@@ -95,9 +91,10 @@ body{background:#111;display:flex;justify-content:center;align-items:stretch;hei
 </div>
 <button class="top-btn" style="position:static" onclick="closeShareModal()">Close</button>
 </div>
+<div id="high-label" style="position:absolute;left:14px;font:11px 'Inter',sans-serif;color:rgba(255,255,255,.55);z-index:20;letter-spacing:.6px">HIGH = SELL ZONE</div>
 <div id="low-label" style="position:absolute;left:14px;font:11px 'Inter',sans-serif;color:rgba(255,255,255,.55);z-index:20;letter-spacing:.6px">LOW = BUY ZONE</div>
 <div id="desc-label" style="position:absolute;left:0;right:0;text-align:center;font:9px 'Inter',sans-serif;color:rgba(255,255,255,.18);z-index:20;pointer-events:none;line-height:1.5">© Mr. Widgets™ — Price-derived approximations, not financial advice</div>
-<div style="position:absolute;top:24px;left:0;right:0;display:flex;flex-direction:column;align-items:center;z-index:20;pointer-events:none">
+<div style="position:absolute;top:44px;left:0;right:0;display:flex;flex-direction:column;align-items:center;z-index:20;pointer-events:none">
 <div class="title-font" style="font:700 22px 'Silkscreen',cursive;color:rgba(255,255,255,.5);letter-spacing:4px;margin-bottom:10px">BTC UAP</div>
 <div id="clk" style="font:14px 'Inter',sans-serif;color:rgba(255,255,255,.6);letter-spacing:.5px"></div>
 <div id="status" style="font:12px 'Inter',sans-serif;color:rgba(255,255,255,.4);margin-top:2px"></div>
@@ -447,7 +444,7 @@ function updateSky(){
 
 updateSky();setInterval(updateSky,10000);
 
-function updateBirdZone(){const l=document.getElementById('leg'),lo=document.getElementById('low-label'),dl=document.getElementById('desc-label'),hi=document.getElementById('high-label'),upd=document.getElementById('updated');if(!l||!scene)return;const h=scene.clientHeight,lr=l.getBoundingClientRect(),sr=scene.getBoundingClientRect(),lt=lr.top-sr.top;const btm=(h-lt+10)+'px';if(lo)lo.style.bottom=btm;if(dl)dl.style.bottom=btm;const fY=lt-40;let cY=32;if(upd){const updR=upd.getBoundingClientRect();cY=updR.bottom-sr.top+10}if(hi)hi.style.top=cY+'px';window._birdTopPct=Math.max(2,(cY/h)*100);window._birdBottomPct=Math.min(90,(fY/h)*100)}
+function updateBirdZone(){const l=document.getElementById('leg'),lo=document.getElementById('low-label'),dl=document.getElementById('desc-label'),hi=document.getElementById('high-label'),upd=document.getElementById('updated');if(!l||!scene)return;const h=scene.clientHeight,lr=l.getBoundingClientRect(),sr=scene.getBoundingClientRect(),lt=lr.top-sr.top;const btm=(h-lt+10)+'px';if(dl)dl.style.bottom=btm;const fY=lt-40;let cY=32;if(upd&&upd.textContent){const updR=upd.getBoundingClientRect();cY=updR.bottom-sr.top+8}if(hi)hi.style.top=cY+'px';const bPct=Math.min(90,(fY/h)*100);if(lo){lo.style.bottom='auto';lo.style.top='calc('+bPct+'% - 14px)'}window._birdTopPct=Math.max(2,((cY+16)/h)*100);window._birdBottomPct=bPct}
 updateBirdZone();setInterval(updateBirdZone,1000);
 let currentInd=null;let isResizeRebuild=false;
 window.addEventListener('resize',()=>{updateBirdZone();requestAnimationFrame(updateBirdZone);clearTimeout(window._resizeTimer);window._resizeTimer=setTimeout(()=>{if(currentInd){isResizeRebuild=true;buildScene(currentInd);isResizeRebuild=false}},300)});

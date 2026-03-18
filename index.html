@@ -228,7 +228,9 @@ function alertChirp(sp){const F={'TR-3B':400,Saucer:600,Orb:800,TicTac:1000,Ciga
 function showShareModal(){document.getElementById('share-modal').style.display='block';document.getElementById('embed-preview').style.display='none'}
 function closeShareModal(){document.getElementById('share-modal').style.display='none'}
 async function shareAsScreenshot(){
-  try{const m=await import('https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/+esm');const c=await m.default(scene,{backgroundColor:null,scale:2});c.toBlob(b=>{if(navigator.share&&navigator.canShare){const f=new File([b],'btc-ufo.png',{type:'image/png'});navigator.share({files:[f],title:'BTC UFO'}).catch(()=>{})}else{const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='btc-ufo.png';a.click()}},  'image/png');closeShareModal()}catch(e){}}
+  const sm=document.getElementById('share-modal');sm.style.display='none';
+  await new Promise(r=>setTimeout(r,100));
+  try{const m=await import('https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/+esm');const c=await m.default(scene,{backgroundColor:null,scale:2});c.toBlob(b=>{if(navigator.share&&navigator.canShare){const f=new File([b],'btc-ufo.png',{type:'image/png'});navigator.share({files:[f],title:'BTC UFO'}).catch(()=>{})}else{const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='btc-ufo.png';a.click()}},  'image/png')}catch(e){}}
 function shareLink(btn){
   const url=window.location.href;
   navigator.clipboard.writeText(url).then(()=>{btn.textContent='✓ Link Copied!';setTimeout(()=>{btn.textContent='🔗 Copy Link'},2000)}).catch(()=>{prompt('Copy this link:',url)})
